@@ -18,7 +18,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gray-800 w-full h-[calc(100vh-5rem)] overflow-y-auto px-4 py-4">
+    <div className="bg-[#262626] w-full h-[calc(100vh-5rem)] overflow-y-auto px-4 py-4">
       <ul className="flex flex-wrap -mx-2">
         {movies.map((movie) => (
           <li key={movie.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">

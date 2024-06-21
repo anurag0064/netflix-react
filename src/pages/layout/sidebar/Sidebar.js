@@ -47,15 +47,8 @@ function Sidebar() {
           ))}
         </div>
       </div>
-      <div className="px-4 py-2 mb-4">
-        <button className="flex items-center w-full px-4 py-2 hover:bg-gray-800 text-gray-400 hover:text-red-600 rounded-xl">
-          <FaSignOutAlt className="w-5 h-5 mr-3" />
-          Log out
-        </button>
-      </div>
     </div>
   );
 }
-
 export default Sidebar;
 

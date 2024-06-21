@@ -15,5 +15,4 @@ const Input = ({ type, name, id, value, onChange, required, placeholder, classNa
         />
     );
 }
-
 export default Input;
