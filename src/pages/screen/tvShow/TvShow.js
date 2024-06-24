@@ -32,7 +32,7 @@ const TVShowList = () => {
                   <img
                     src={`${IMAGE_BASE_URL}${item.poster_path}`}
                     alt={`${item.name} poster`}
-                    className="w-full h-auto rounded-lg mb-2"
+                    className="w-full h-auto rounded-lg mb-2 hover:scale-105 hover:shadow-lg transition duration-30"
                   />
                 )}
               </Link>

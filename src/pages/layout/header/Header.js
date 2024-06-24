@@ -6,21 +6,33 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
- 
-    const navigate = useNavigate();
 
-    const handleLoginClick = () => {
-      navigate('/auth/login');
-    }
-  
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/auth/login');
+  }
+
   return (
     <header className="w-full h-20 bg-[#2d2d2d] py-4 px-4">
       <div className="mx-auto flex items-center justify-between">
         <nav className="flex flex-grow justify-between w-full">
           <div className="flex flex-1 justify-start items-center space-x-4 md:space-x-6">
             <div className='flex items-center gap-2 md:gap-6'>
-              <MdArrowBackIosNew className='text-gray-800 bg-[#282828] text-xl' />
-              <MdArrowForwardIos className='text-gray-800 bg-[#282828] text-xl' />
+              <div className='flex'>
+                <Button
+                  icon={<MdArrowBackIosNew />}
+                  className={"text-gray-800 bg-[#282828] text-xl"}
+                  onClick={() => alert('Previous page')}
+                />
+              </div>
+              <div className='flex'>
+                <Button
+                  icon={<MdArrowForwardIos />}
+                  className={"text-gray-800 bg-[#282828] text-xl"}
+                  onClick={() => alert('Next page')}
+                />
+              </div>
             </div>
             <DefaultInput className="flex-grow hidden md:block" />
           </div>

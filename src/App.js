@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter} from "react-router-dom";
 import Login from "./pages/auth/login/Login";
 import MainRoute from "./route/mainRoute/MainRoute";
 import AuthRoute from "./route/authRoute/AuthRoute";
@@ -16,7 +16,7 @@ import TVShowDetail from "./pages/screen/tvShowDetail/TvShowDetail";
 
 export default function App() {
   return (
-    <AuthProvider>
+  <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainRoute/>}>
@@ -35,6 +35,6 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
   )
 }

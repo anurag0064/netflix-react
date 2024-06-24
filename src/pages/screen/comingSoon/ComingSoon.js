@@ -27,7 +27,7 @@ function ComingSoon() {
           {movies.map(movie => (
             <div key={movie.id} className=' rounded'>
               {movie.poster_path ? (
-                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} className='w-full h-auto rounded mb-4' />
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} className='w-full h-auto rounded-lg mb-2 hover:scale-105 hover:shadow-lg transition duration-300' />
               ) : (
                 <div className='w-full h-[300px] bg-gray-700 rounded mb-4 flex items-center justify-center'>
                   <span className='text-gray-400'>No Image Available</span>
@@ -35,7 +35,6 @@ function ComingSoon() {
               )}
               <h2 className='text-white text-sm'>{movie.title}</h2>
               <p className='text-gray-400 text-sm'>{movie.release_date}</p>
-              <p className='text-gray-300 text-sm'>{movie.overview}</p>
             </div>
           ))}
         </div>
@@ -43,5 +42,4 @@ function ComingSoon() {
     </div>
   );
 }
-
 export default ComingSoon;
