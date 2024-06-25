@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IMAGE_BASE_URL, ADD_TO_FAVORITES_ENDPOINT, API_KEY } from '../../../config/config';
+import { IMAGE_BASE_URL, ADD_TO_FAVORITES_ENDPOINT, API_KEY } from '../../../config/constants';
 import axios from 'axios';
 import Button from '../../../components/buttons/Button';
 import { fetchPopularMovies } from '../../../services/movies.service';

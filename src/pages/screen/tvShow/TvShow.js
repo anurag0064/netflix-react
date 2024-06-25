@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL, API_KEY, IMAGE_BASE_URL } from '../../../config/config';
+import { BASE_URL, API_KEY, IMAGE_BASE_URL } from '../../../config/constants';
 
 const TVShowList = () => {
   const [tvShows, setTVShows] = useState([]);
 
   useEffect(() => {
-    const fetchTVShows = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/tv/top_rated`, {
-          params: { api_key: API_KEY },
-        });
-        setTVShows(response.data.results);
-      } catch (error) {
-        console.error('Error fetching top rated TV shows:', error);
-      }
-    };
+  
     fetchTVShows();
   }, []);
 
+
+  const fetchTVShows = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/tv/top_rated`, {
+        params: { api_key: API_KEY },
+      });
+      setTVShows(response.data.results);
+    } catch (error) {
+      console.error('Error fetching top rated TV shows:', error);
+    }
+  };
+
   return (
-    <div className="bg-[#262626] w-full h-[calc(100vh-5rem)] overflow-y-auto px-4 py-4">
+    <div className=" bg-[#262626] w-full h-[calc(100vh-5rem)] overflow-y-auto px-4 py-4">
       <h1 className="text-2xl text-[#e30a13] font-bold mb-4">Top Rated TV Shows</h1>
       <ul className="flex flex-wrap -mx-2">
         {tvShows.map((item) => (
@@ -32,7 +35,7 @@ const TVShowList = () => {
                   <img
                     src={`${IMAGE_BASE_URL}${item.poster_path}`}
                     alt={`${item.name} poster`}
-                    className="w-full h-auto rounded-lg mb-2 hover:scale-105 hover:shadow-lg transition duration-30"
+                    className="w-96 h-auto rounded-lg mb-2 hover:scale-105 hover:shadow-lg transition duration-30"
                   />
                 )}
               </Link>

@@ -4,7 +4,7 @@ import Input from '../../../components/input/Input';
 import background from "../../../assets/images/background.webp";
 import Button from '../../../components/buttons/Button';
 import { useAuth } from '../../../context/authContext/AuthContext';
-import { ACCESS_TOKEN } from '../../../config/config';
+import { ACCESS_TOKEN } from '../../../config/constants';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {

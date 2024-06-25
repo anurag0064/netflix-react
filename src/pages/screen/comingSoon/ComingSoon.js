@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_KEY, IMAGE_BASE_URL } from '../../../config/config';
+import { API_KEY, IMAGE_BASE_URL } from '../../../config/constants';
 
 
 function ComingSoon() {
