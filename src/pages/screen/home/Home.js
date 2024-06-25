@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { fetchPopularMovies } from '../../../config/axios.config';
-import CarouselDefault from './components/carsouelDefault/Carsouel';
+import { fetchPopularMovies } from '../../../services/movies.service';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const movies = await fetchPopularMovies();
-        setMovies(movies);
-      } catch (error) {
-        console.error('Error fetching movies:', error);
-      }
-    };
+  const getMovies = async () => {
+    try {
+      const movies = await fetchPopularMovies();
+      setMovies(movies);
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    }
+  };
 
+  useEffect(() => {
     getMovies();
   }, []);
 

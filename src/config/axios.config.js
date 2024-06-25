@@ -2,16 +2,27 @@ import axios from 'axios';
 import { API_KEY, BASE_URL } from './config';
 
 
-export const fetchPopularMovies = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/movie/popular`, {
-      params: {
-        api_key: API_KEY,
-      },
-    });
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching the movies: ", error);
-    return [];
-  }
-};
+const Axios = axios.create({
+	baseURL: BASE_URL,
+});
+
+Axios.interceptors.request.use(
+	function (config) {
+		config.headers = {
+			...config.headers,
+			Authorization: `${localStorage.getItem('token')}`,
+		};
+
+    config.params = {
+      ...config.params,
+      api_key: API_KEY
+    }
+
+		return config;
+	},
+	function (error) {
+		return Promise.reject(error);
+	}
+);
+
+export default Axios;

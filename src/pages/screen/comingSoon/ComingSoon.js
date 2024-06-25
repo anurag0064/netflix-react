@@ -26,13 +26,7 @@ function ComingSoon() {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           {movies.map(movie => (
             <div key={movie.id} className=' rounded'>
-              {movie.poster_path ? (
                 <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} className='w-full h-auto rounded-lg mb-2 hover:scale-105 hover:shadow-lg transition duration-300' />
-              ) : (
-                <div className='w-full h-[300px] bg-gray-700 rounded mb-4 flex items-center justify-center'>
-                  <span className='text-gray-400'>No Image Available</span>
-                </div>
-              )}
               <h2 className='text-white text-sm'>{movie.title}</h2>
               <p className='text-gray-400 text-sm'>{movie.release_date}</p>
             </div>

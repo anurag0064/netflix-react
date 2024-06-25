@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPopularMovies } from '../../../config/axios.config';
 import { IMAGE_BASE_URL, ADD_TO_FAVORITES_ENDPOINT, API_KEY } from '../../../config/config';
 import axios from 'axios';
 import Button from '../../../components/buttons/Button';
+import { fetchPopularMovies } from '../../../services/movies.service';
+import Axios from '../../../config/axios.config';
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
 
+  const fetchMovies = async () => {
+    try {
+      const moviesData = await fetchPopularMovies();
+      setMovies(moviesData);
+    } catch (error) {
+      console.error('Error fetching popular movies:', error);
+    }
+  };
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const moviesData = await fetchPopularMovies();
-        setMovies(moviesData);
-      } catch (error) {
-        console.error('Error fetching popular movies:', error);
-      }
-    };
-
     fetchMovies();
   }, []);
 
   const handleAddToFavorites = async (movieId) => {
     try {
-      const response = await axios.post(ADD_TO_FAVORITES_ENDPOINT.replace('{account_id}', 'your_account_id'), {
+      const response = await Axios.post(ADD_TO_FAVORITES_ENDPOINT.replace('{account_id}', 'your_account_id'), {
         media_type: 'movie',
         media_id: movieId,
         favorite: true
