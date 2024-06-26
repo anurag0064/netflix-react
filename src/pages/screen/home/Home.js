@@ -30,7 +30,7 @@ const Home = () => {
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
               />
-              <h2 className="text-white text-sm mb-2">{movie.title}</h2>
+              <h2 className="text-white text-sm mb-2 font-semibold">{movie.title}</h2>
               <p className="text-gray-400 text-sm">Rating: {movie.vote_average}</p>
             </div>
           </li>
