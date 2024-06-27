@@ -61,12 +61,3 @@ export const fetchTVShow = async (id) => {
 };
 
 
-export const fetchPeople = async (id) => {
-    try{
-        const res = await Axios.get(`/tv/${id}`);
-        return res.data;
-    } catch (error) {
-      console.error('error fetching Tv People list:',error)
-      return error;
-    }
-  };

@@ -23,7 +23,9 @@ function Sidebar() {
     <div className="relative top-0 bottom-0 left-0 w-60 h-screen bg-[#2d2d2d] text-gray-400 flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-center mt-4">
-          <img src={logo} alt="Logo" className="w-64" />
+          <Link to="/">
+            <img src={logo} alt="Logo" className="w-64" />
+          </Link>
         </div>
         <div className="text-gray-500 px-4 mb-2 mt-4">Menu</div>
         <nav className="mt-5 px-4">

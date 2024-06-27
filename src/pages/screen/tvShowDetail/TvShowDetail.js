@@ -4,7 +4,10 @@ import Button from '../../../components/buttons/Button';
 import { fetchFandom, fetchMedia, fetchTVShow, fetchVideos, fetchPeople} from '../../../services/movies.service';
 import { IMAGE_BASE_URL, VIDEO_BASE_URL } from '../../../config/constants';
 import ImageModal from './components/modal/Modal';
-
+import { FaList } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
+import Loader from '../../../components/loader/Loader';
+// import Personal from './components/personal/Personal';
 
 
 const TVShowDetail = () => {
@@ -17,14 +20,9 @@ const TVShowDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  // const [people, setPeople] = useState([]);
   
 
-  const Loader = () => (
-    <div className="flex justify-center items-center h-full bg-[#262626]">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white-900"></div>
-    </div>
-  );
+
 
   const fetchData = async () => {
     try {
@@ -40,10 +38,6 @@ const TVShowDetail = () => {
 
       const fandomData = await fetchFandom(id);
       setFandom(fandomData);
-
-      // const peopleData = await fetchPeople(id);
-      // setPeople(peopleData); 
-
       setLoading(false);
 
     } catch (error) {
@@ -73,11 +67,6 @@ const TVShowDetail = () => {
             className={`px-4 py-2 rounded-lg ${activeTab === 'overview' ? 'text-white' : 'text-gray-500'}`}
           />
           <Button
-            text="Videos"
-            onClick={() => setActiveTab('videos')}
-            className={`px-4 py-2 rounded-lg ${activeTab === 'videos' ? 'text-white' : 'text-gray-500'}`}
-          />
-          <Button
             text="Media"
             onClick={() => setActiveTab('media')}
             className={`px-4 py-2 rounded-lg ${activeTab === 'media' ? 'text-white' : 'text-gray-500'}`}
@@ -86,6 +75,11 @@ const TVShowDetail = () => {
             text="Fandom"
             onClick={() => setActiveTab('fandom')}
             className={`px-4 py-2 rounded-lg ${activeTab === 'fandom' ? 'text-white' : 'text-gray-500'}`}
+          />
+          <Button
+            text="Share"
+            onClick={() => setActiveTab('share')}
+            className={`px-4 py-2 rounded-lg ${activeTab === 'share' ? 'text-white' : 'text-gray-500'}`}
           />
         </div>
         <div className='flex'>
@@ -105,81 +99,54 @@ const TVShowDetail = () => {
                   alt={`${tvShow.name} poster`}
                   className='w-auto h-full rounded-lg mb-2 object-cover hover:filter hover:blur-sm'
                 />
-                <div className='flex flex-col gap-3'>
+                <div className='flex flex-col ap-3'>
+                  <div className=' flex-col flex gap-3'>
                   <h2 className='text-3xl text-white font-bold '>{tvShow.name}</h2>
-                  <p className='text-white text-xs'>Rating: {tvShow.vote_average}</p>
-                  <p className='text-white'>{tvShow.overview}</p>
+                  <p className='text-white text-sm'>Rating: {tvShow.vote_average}</p>
+                  <p className='text-white text-sm'>{tvShow.overview}</p>
+                    </div>
+                 <div className='flex gap-4 mt-3'>
+                  <Button
+                 className={"hide-rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
+                  icon={<FaList/>}
+                  />
+                  <Button
+                  icon={<FaHeart/>}
+                  className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs"}
+                  />
+                  </div>
                 </div>
               </div>
+           
             </div>
           )}
           <ImageModal isOpen={isModalOpen} image={selectedImage} onClose={() => setIsModalOpen(false)} />
         </div>
       </div>
       <div className="flex flex-col mt-4">
-      {/* {activeTab === 'overview' && (
-            // <h3 className="text-white text-xl font-bold">Cast</h3>
-            // <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            //   {people.cast.map((person) => (
-            //     <li key={person.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
-            //       <img
-            //         src={`${IMAGE_BASE_URL}${person.profile_path}`}
-            //         alt={person.name}
-            //         className="w-full h-40 object-cover rounded-lg mb-2"
-            //       />
-            //       <p className="text-white text-sm">{person.name}</p>
-            //       <p className="text-gray-400 text-xs">{person.character}</p>
-            //     </li>
-            //   ))}
-            // </ul>
-            // <h3 className="text-white text-xl font-bold mt-6">Crew</h3>
-            // <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            //   {people.crew.map((person) => (
-            //     <li key={person.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
-            //       <img
-            //         src={`${IMAGE_BASE_URL}${person.profile_path}`}
-            //         alt={person.name}
-            //         className="w-full h-40 object-cover rounded-lg mb-2"
-            //       />
-            //       <p className="text-white text-sm">{person.name}</p>
-            //       <p className="text-gray-400 text-xs">{person.job}</p>
-            //     </li>
-            //   ))}
-            // </ul>
-        
-        )}; */}
-        {activeTab === 'videos' && videos.length > 0 && (
-          <div>
-            <p className="text-white mt-4">Videos:</p>
-            <ul>
-              {videos.map((video) => (
-                <li key={video.id}>
-                  <a
-                    href={`${VIDEO_BASE_URL}${video.key}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    {video.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+      {activeTab === 'overview' && (
+         <div>
+         {/* <Personal/> */}
           </div>
-        )}
+        )};
         {activeTab === 'media' && media.length > 0 && (
           <div>
             <p className="text-white mt-4">Media:</p>
             <ul className="grid grid-cols-4 gap-4 ">
               {media.map((image, index) => (
                 <li key={index}>
-                  <div className='max-w-sm rounded bg-gray-800 p-1 overflow-hidden shadow-lg'>
+                  <div className='max-w-sm rounded bg-gray-900 p-1 overflow-hidden shadow-lg'>
                   <img
                     src={`${IMAGE_BASE_URL}${image.file_path}`}
                     alt="Media"
-                    className="flex w-full h-auto object-cover cursor-pointer"
+                    className="flex w-full h-96 object-cover cursor-pointer"
                     onClick={() => handleImageClick(image)}
                   />
+                  <div className="p-2">
+                <h2 className="text-white text-lg">{image.title}</h2>
+                <p className="text-gray-400">{image.release_date}</p>
+                <p className="text-white text-sm">Rating: {image.vote_average}</p>
+              </div>
                   </div>
                 </li>
               ))}
