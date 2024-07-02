@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Button from '../../../components/buttons/Button';
-import { fetchFandom, fetchMedia, fetchTVShow, fetchVideos, fetchPeople} from '../../../services/movies.service';
-import { IMAGE_BASE_URL, VIDEO_BASE_URL } from '../../../config/constants';
+import { fetchFandom, fetchMedia, fetchTVShow, fetchVideos } from '../../../services/movies.service';
+import { IMAGE_BASE_URL } from '../../../config/constants';
 import ImageModal from './components/modal/Modal';
 import { FaList } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 import Loader from '../../../components/loader/Loader';
-// import Personal from './components/personal/Personal';
-
+import MovieDetails from './components/movieDetail/MovieDetail';
+import CastList from './components/movieDetail/MovieDetail';
+import BilledCast from './components/cast/Cast';
+import SearchMovies from './components/search/Search';
 
 const TVShowDetail = () => {
   const { id } = useParams();
@@ -16,13 +18,15 @@ const TVShowDetail = () => {
   const [videos, setVideos] = useState([]);
   const [media, setMedia] = useState([]);
   const [fandom, setFandom] = useState([]);
+  const [share, setshare] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  
 
+  const movieId = 12345;
 
+  console.log("id ----", id)
 
   const fetchData = async () => {
     try {
@@ -38,13 +42,18 @@ const TVShowDetail = () => {
 
       const fandomData = await fetchFandom(id);
       setFandom(fandomData);
-      setLoading(false);
 
+      const shareData = await fetchFandom(id);
+      setshare(shareData);
+
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
       setLoading(false);
     }
   };
+
+
 
   useEffect(() => {
     fetchData();
@@ -101,58 +110,59 @@ const TVShowDetail = () => {
                 />
                 <div className='flex flex-col ap-3'>
                   <div className=' flex-col flex gap-3'>
-                  <h2 className='text-3xl text-white font-bold '>{tvShow.name}</h2>
-                  <p className='text-white text-sm'>Rating: {tvShow.vote_average}</p>
-                  <p className='text-white text-sm'>{tvShow.overview}</p>
-                    </div>
-                 <div className='flex gap-4 mt-3'>
-                  <Button
-                 className={"hide-rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
-                  icon={<FaList/>}
-                  />
-                  <Button
-                  icon={<FaHeart/>}
-                  className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs"}
-                  />
+                    <h2 className='text-3xl text-white font-bold '>{tvShow.name}</h2>
+                    <p className='text-white text-sm'>Rating: {tvShow.vote_average}</p>
+                    <p className='text-white text-sm'>{tvShow.overview}</p>
+                  </div>
+                  <div className='flex gap-4 mt-3'>
+                    <Button
+                      className={"hide-rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
+                      icon={<FaList />}
+                    />
+                    <Button
+                      icon={<FaHeart />}
+                      className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs"}
+                    />
                   </div>
                 </div>
               </div>
-           
             </div>
           )}
           <ImageModal isOpen={isModalOpen} image={selectedImage} onClose={() => setIsModalOpen(false)} />
         </div>
       </div>
       <div className="flex flex-col mt-4">
-      {activeTab === 'overview' && (
-         <div>
-         {/* <Personal/> */}
-          </div>
-        )};
+        {activeTab === 'overview' && (
+          <BilledCast movieId={id} />
+        )}
         {activeTab === 'media' && media.length > 0 && (
           <div>
             <p className="text-white mt-4">Media:</p>
-            <ul className="grid grid-cols-4 gap-4 ">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {media.map((image, index) => (
                 <li key={index}>
-                  <div className='max-w-sm rounded bg-gray-900 p-1 overflow-hidden shadow-lg'>
-                  <img
-                    src={`${IMAGE_BASE_URL}${image.file_path}`}
-                    alt="Media"
-                    className="flex w-full h-96 object-cover cursor-pointer"
-                    onClick={() => handleImageClick(image)}
-                  />
-                  <div className="p-2">
-                <h2 className="text-white text-lg">{image.title}</h2>
-                <p className="text-gray-400">{image.release_date}</p>
-                <p className="text-white text-sm">Rating: {image.vote_average}</p>
-              </div>
+                  <div className="bg-red-700 rounded-lg h-auto overflow-hidden shadow-lg">
+                    <img
+                      src={`${IMAGE_BASE_URL}${image.file_path}`}
+                      alt="Media"
+                      className="w-full h-60 object-cover cursor-pointer"
+                      onClick={() => handleImageClick(image)}
+                    />
+                    <div className="p-4">
+                      <h2 className="text-white text-lg">{image.title}</h2>
+                      <p className="text-gray-400">{image.release_date}</p>
+                      <p className="text-white text-sm">Rating: {image.vote_average}</p>
+                      <p className="text-white text-sm">Size: {image.size} KB</p>
+                      <p className="text-white text-sm">Added by: {image.added_by}</p>
+                      <p className="text-white text-sm">Language: {image.language}</p>
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
           </div>
         )}
+
         {activeTab === 'fandom' && fandom.length > 0 && (
           <div>
             <p className="text-white mt-4">Fandom:</p>
@@ -166,10 +176,14 @@ const TVShowDetail = () => {
             </ul>
           </div>
         )}
+        {activeTab === 'share' && share.length > 0 && (
+          <div>
+            <SearchMovies />
+          </div>
+        )}
       </div>
       <Link to="/" className="text-blue-500 hover:underline mb-4 block">Back to list</Link>
     </div>
   );
 };
-
 export default TVShowDetail;

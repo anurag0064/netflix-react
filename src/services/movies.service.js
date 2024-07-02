@@ -1,4 +1,6 @@
 import Axios from "../config/axios.config";
+import axios from "axios";
+import { API_KEY } from "../config/constants";
 
 export const fetchPopularMovies = async () => {
   try {
@@ -61,3 +63,12 @@ export const fetchTVShow = async (id) => {
 };
 
 
+export const fetchCast = async (movieId) => {
+  try {
+    const res = await axios.get(`/movie/${movieId}/credits`,);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching cast:', error);
+    return error;
+  }
+};

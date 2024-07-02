@@ -1,5 +1,8 @@
 // import Axios from "../config/axios.config";
 
+import { wait } from "@testing-library/user-event/dist/utils";
+import Axios from "../config/axios.config";
+
 // export const fetchPerson = async () => {
 //     try {
 //       const response = await Axios.get(`/person/changes?page=1`);
@@ -20,3 +23,4 @@ export const fetchPeople = async (id) => {
       return error;
     }
   };
+
