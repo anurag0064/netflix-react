@@ -7,10 +7,8 @@ import ImageModal from './components/modal/Modal';
 import { FaList } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 import Loader from '../../../components/loader/Loader';
-import MovieDetails from './components/movieDetail/MovieDetail';
-import CastList from './components/movieDetail/MovieDetail';
 import BilledCast from './components/cast/Cast';
-import SearchMovies from './components/search/Search';
+
 
 const TVShowDetail = () => {
   const { id } = useParams();
@@ -178,7 +176,7 @@ const TVShowDetail = () => {
         )}
         {activeTab === 'share' && share.length > 0 && (
           <div>
-            <SearchMovies />
+          
           </div>
         )}
       </div>
