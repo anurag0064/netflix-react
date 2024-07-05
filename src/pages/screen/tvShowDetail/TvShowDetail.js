@@ -8,6 +8,7 @@ import { FaList } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 import Loader from '../../../components/loader/Loader';
 import BilledCast from './components/cast/Cast';
+import { MdOutlineSaveAlt } from "react-icons/md";
 
 
 const TVShowDetail = () => {
@@ -114,12 +115,16 @@ const TVShowDetail = () => {
                   </div>
                   <div className='flex gap-4 mt-3'>
                     <Button
-                      className={"hide-rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
+                      className={"hide rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
                       icon={<FaList />}
                     />
                     <Button
                       icon={<FaHeart />}
                       className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs"}
+                    />
+                     <Button
+                      icon={<MdOutlineSaveAlt />}
+                      className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-sm"}
                     />
                   </div>
                 </div>

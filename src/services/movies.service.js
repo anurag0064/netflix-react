@@ -72,3 +72,4 @@ export const fetchCast = async (movieId) => {
     return error;
   }
 };
+

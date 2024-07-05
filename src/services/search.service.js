@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { API_KEY } from '../config/constants';
+import { API_KEY, BASE_URL } from '../config/constants';
  
 
 export const searchMovies = async (query) => {
@@ -14,3 +14,37 @@ export const searchMovies = async (query) => {
     throw error;
   }
 };
+
+
+const fetchMovies = async (query, page) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/search/movie`, {
+            params: {
+                api_key: API_KEY,
+                query: query,
+                page: page,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data from TMDB', error);
+        throw error;
+    }
+};
+
+const fetchDefaultMovies = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/movie/popular`, {
+            params: {
+                api_key: API_KEY,
+                page: 1,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching default movies from TMDB', error);
+        throw error;
+    }
+};
+
+export { fetchMovies, fetchDefaultMovies };

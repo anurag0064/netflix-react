@@ -5,6 +5,8 @@ import Button from '../../../components/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_KEY } from '../../../config/constants';
+import { FaCircleUser } from "react-icons/fa6";
+
 
 const Header = () => {
   const [query, setQuery] = useState('');
@@ -51,7 +53,7 @@ const Header = () => {
             <div className="flex-grow hidden md:block">
               <form onSubmit={searchMovies}>
                 <DefaultInput
-                  placeholder="Enter the movie"
+                  placeholder="Search"
                   onChange={(e) => setQuery(e.target.value)}
                   value={query}
                 />
@@ -60,8 +62,9 @@ const Header = () => {
           </div>
           <div className='flex items-center space-x-4'>
             <Button
+              icon={<FaCircleUser/>}
               text='Sign In'
-              className="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2"
+              className="bg-red-500 gap-1 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2"
               onClick={handleLoginClick}
             />
           </div>

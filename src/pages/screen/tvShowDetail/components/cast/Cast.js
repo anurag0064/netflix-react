@@ -31,10 +31,10 @@ const BilledCast = ({ movieId }) => {
             <img
               src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
               alt={actor.name}
-              className="w-full h-auto mb-2 rounded"
+              className="w-full h-56 mb-2 object-cover rounded"
             />
-            <h3 className="text-lg font-medium">{actor.name}</h3>
-            <p className="text-sm text-gray-500">{actor.character}</p>
+            <h3 className="text-sm font-medium text-white">{actor.name}</h3>
+            <p className="text-xs text-gray-500">{actor.character}</p>
           </div>
         ))}
       </div>
