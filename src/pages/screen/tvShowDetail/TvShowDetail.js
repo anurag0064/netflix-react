@@ -4,11 +4,11 @@ import Button from '../../../components/buttons/Button';
 import { fetchFandom, fetchMedia, fetchTVShow, fetchVideos } from '../../../services/movies.service';
 import { IMAGE_BASE_URL } from '../../../config/constants';
 import ImageModal from './components/modal/Modal';
-import { FaList } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa";
-import Loader from '../../../components/loader/Loader';
-import BilledCast from './components/cast/Cast';
+import VideoModal from './components/videoModel/VideoModel';
+import { FaList, FaHeart, FaPlay } from "react-icons/fa";
 import { MdOutlineSaveAlt } from "react-icons/md";
+import BilledCast from './components/cast/Cast';
+import Loader from '../../../components/loader/Loader';
 
 
 const TVShowDetail = () => {
@@ -17,15 +17,13 @@ const TVShowDetail = () => {
   const [videos, setVideos] = useState([]);
   const [media, setMedia] = useState([]);
   const [fandom, setFandom] = useState([]);
-  const [share, setshare] = useState([]);
+  const [share, setShare] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const movieId = 12345;
-
-  console.log("id ----", id)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [trailerUrl, setTrailerUrl] = useState('');
 
   const fetchData = async () => {
     try {
@@ -43,7 +41,7 @@ const TVShowDetail = () => {
       setFandom(fandomData);
 
       const shareData = await fetchFandom(id);
-      setshare(shareData);
+      setShare(shareData);
 
       setLoading(false);
     } catch (error) {
@@ -52,8 +50,6 @@ const TVShowDetail = () => {
     }
   };
 
-
-
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -61,6 +57,14 @@ const TVShowDetail = () => {
   const handleImageClick = (image) => {
     setSelectedImage(`${IMAGE_BASE_URL}${image.file_path}`);
     setIsModalOpen(true);
+  };
+
+  const handlePlayTrailer = () => {
+    const trailer = videos.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+    if (trailer) {
+      setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
+      setIsVideoModalOpen(true);
+    }
   };
 
   if (loading) return <Loader />;
@@ -91,7 +95,7 @@ const TVShowDetail = () => {
           />
         </div>
         <div className='flex'>
-          {tvShow.poster_path && (
+          {tvShow?.poster_path && (
             <div className='relative flex h-96 w-full text-white'>
               <div
                 className='absolute inset-0 bg-black opacity-40'
@@ -107,24 +111,28 @@ const TVShowDetail = () => {
                   alt={`${tvShow.name} poster`}
                   className='w-auto h-full rounded-lg mb-2 object-cover hover:filter hover:blur-sm'
                 />
-                <div className='flex flex-col ap-3'>
-                  <div className=' flex-col flex gap-3'>
-                    <h2 className='text-3xl text-white font-bold '>{tvShow.name}</h2>
-                    <p className='text-white text-sm'>Rating: {tvShow.vote_average}</p>
-                    <p className='text-white text-sm'>{tvShow.overview}</p>
-                  </div>
+                <div className='flex flex-col gap-3'>
+                  <h2 className='text-3xl text-white font-bold'>{tvShow.name}</h2>
+                  <p className='text-white text-sm'>Rating: {tvShow.vote_average}</p>
+                  <p className='text-white text-sm'>{tvShow.overview}</p>
                   <div className='flex gap-4 mt-3'>
                     <Button
-                      className={"hide rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm"}
+                      className="hide rounded-lg bg-[#e30a13] hover:bg-slate-100 text-sm hover:bg-red-800"
                       icon={<FaList />}
                     />
                     <Button
                       icon={<FaHeart />}
-                      className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs"}
+                      className="rounded-full bg-[#e30a13] hover:bg-slate-100 text-xs hover:bg-red-800"
                     />
-                     <Button
+                    <Button
                       icon={<MdOutlineSaveAlt />}
-                      className={"rounded-full bg-[#e30a13] hover:bg-slate-100 text-sm"}
+                      className="rounded-full bg-[#e30a13] hover:bg-slate-100 text-sm hover:bg-red-800"
+                    />
+                    <Button
+                      icon={<FaPlay />}
+                      text='Play Trailer'
+                      className="rounded-full bg-[#e30a13] text-white hover:text-white-200 gap-1 hover:bg-slate-100 text-xs hover:bg-red-800"
+                      onClick={handlePlayTrailer}
                     />
                   </div>
                 </div>
@@ -134,10 +142,13 @@ const TVShowDetail = () => {
           <ImageModal isOpen={isModalOpen} image={selectedImage} onClose={() => setIsModalOpen(false)} />
         </div>
       </div>
+      <VideoModal
+        isOpen={isVideoModalOpen}
+        videoUrl={trailerUrl}
+        onClose={() => setIsVideoModalOpen(false)}
+      />
       <div className="flex flex-col mt-4">
-        {activeTab === 'overview' && (
-          <BilledCast movieId={id} />
-        )}
+        {activeTab === 'overview' && <BilledCast movieId={id} />}
         {activeTab === 'media' && media.length > 0 && (
           <div>
             <p className="text-white mt-4">Media:</p>
@@ -165,7 +176,6 @@ const TVShowDetail = () => {
             </ul>
           </div>
         )}
-
         {activeTab === 'fandom' && fandom.length > 0 && (
           <div>
             <p className="text-white mt-4">Fandom:</p>
@@ -181,7 +191,14 @@ const TVShowDetail = () => {
         )}
         {activeTab === 'share' && share.length > 0 && (
           <div>
-          
+            <p className="text-white mt-4">Share:</p>
+            <ul>
+              {share.map((item, index) => (
+                <li key={index} className="mb-4">
+                  <p className="text-white">{item.content}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
@@ -189,4 +206,5 @@ const TVShowDetail = () => {
     </div>
   );
 };
+
 export default TVShowDetail;

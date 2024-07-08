@@ -11,7 +11,7 @@ const MovieSearch = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const loadDefaultMovies = async () => {
+    const DefaultMovies = async () => {
         try {
             const data = await fetchDefaultMovies();
             setDefaultMovies(data.results);
@@ -21,7 +21,7 @@ const MovieSearch = () => {
     };
 
     useEffect(() => {
-        loadDefaultMovies();
+        DefaultMovies();
     }, []);
 
     const loadMovies = async () => {
@@ -50,6 +50,8 @@ const MovieSearch = () => {
             })
             .catch(error => console.error('Error fetching data from TMDB', error));
     };
+
+
 
     const handleNextPage = () => {
         if (page < totalPages) {
@@ -103,7 +105,7 @@ const MovieSearch = () => {
                 </div>
             ) : (
                
-                <div className="flex items-center justify-center w-100 h-4/5 text-center text-white text-3xl">No data found</div>
+                <div className="flex items-center justify-center w-100 h-4/5 text-center text-white text-xl">No data found</div>
             
             )}
             <div className="flex justify-between items-center mt-4">

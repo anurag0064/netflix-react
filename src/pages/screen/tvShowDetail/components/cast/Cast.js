@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_KEY } from '../../../../../config/constants';
+import { Carousel } from '@material-tailwind/react';
 
 const BilledCast = ({ movieId }) => {
   const [cast, setCast] = useState([]);
