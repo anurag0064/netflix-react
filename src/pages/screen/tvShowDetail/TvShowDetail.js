@@ -22,7 +22,7 @@ const TVShowDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [VideoModalOpen, setVideoModalOpen] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
 
   const fetchData = async () => {
@@ -59,11 +59,12 @@ const TVShowDetail = () => {
     setIsModalOpen(true);
   };
 
+
   const handlePlayTrailer = () => {
     const trailer = videos.find(video => video.type === 'Trailer' && video.site === 'YouTube');
     if (trailer) {
       setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
-      setIsVideoModalOpen(true);
+      setVideoModalOpen(true);
     }
   };
 
@@ -143,12 +144,14 @@ const TVShowDetail = () => {
         </div>
       </div>
       <VideoModal
-        isOpen={isVideoModalOpen}
+        isOpen={VideoModalOpen}
         videoUrl={trailerUrl}
-        onClose={() => setIsVideoModalOpen(false)}
+        onClose={() => setVideoModalOpen(false)}
       />
       <div className="flex flex-col mt-4">
-        {activeTab === 'overview' && <BilledCast movieId={id} />}
+        {activeTab === 'overview' && <BilledCast movieId={id} />
+      
+        }
         {activeTab === 'media' && media.length > 0 && (
           <div>
             <p className="text-white mt-4">Media:</p>
@@ -162,14 +165,14 @@ const TVShowDetail = () => {
                       className="w-full h-60 object-cover cursor-pointer"
                       onClick={() => handleImageClick(image)}
                     />
-                    <div className="p-4">
+                    {/* <div className="p-4">
                       <h2 className="text-white text-lg">{image.title}</h2>
                       <p className="text-gray-400">{image.release_date}</p>
                       <p className="text-white text-sm">Rating: {image.vote_average}</p>
                       <p className="text-white text-sm">Size: {image.size} KB</p>
                       <p className="text-white text-sm">Added by: {image.added_by}</p>
                       <p className="text-white text-sm">Language: {image.language}</p>
-                    </div>
+                    </div> */}
                   </div>
                 </li>
               ))}

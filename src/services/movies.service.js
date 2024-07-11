@@ -65,7 +65,7 @@ export const fetchTVShow = async (id) => {
 
 export const fetchCast = async (movieId) => {
   try {
-    const res = await axios.get(`/movie/${movieId}/credits`,);
+    const res = await Axios.get(`/movie/${movieId}/credits`,);
     return res.data;
   } catch (error) {
     console.error('Error fetching cast:', error);

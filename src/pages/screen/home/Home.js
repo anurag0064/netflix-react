@@ -17,6 +17,7 @@ const Home = () => {
     getMovies();
   }, []);
 
+
   return (
     <div className="bg-[#262626] w-full h-[calc(100vh-5rem)] overflow-y-auto px-4 py-4">
       {/* <CarouselDefault/> */}
